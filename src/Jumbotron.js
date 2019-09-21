@@ -1,12 +1,23 @@
 import React , {useState} from 'react';
+import { validateEmail } from './utils';
 
 function Jumbotron(prop) {
 
-    const [subscribed, setSubscribed] = useState(false);
+    const [state, setState] = useState(
+        {emailValid:null}
+
+    );
+    let emailField;
 
     function subscribeUser(){
-        setSubscribed(true);
+
+            if(!validateEmail(emailField.value)){
+               setState({emailValid:"invalid"})
+            } else{
+                setState({emailValid:"valid"})
+            }        
     }
+    
 
 return (
         <div className="container">
@@ -19,18 +30,25 @@ return (
                 </div>
                 <form className="form-inline">                    
                     <div className="form-group mx-sm-2 mb-2">
-                        <label for="email" className="sr-only">Email</label>
-                        <input type="password" className="form-control" id="email" placeholder="Email Address"></input>
+                        <label for="emailAddress" className="sr-only">Email</label>
+                        <input ref={inputField => emailField = inputField} type="email" className="form-control" id="emailAddress" placeholder="Email Address"></input>
                     </div>
                     <button type="button" onClick={subscribeUser} className="btn btn-primary mb-2">Subscribe</button>
                 </form>     
 
 
-                {subscribed &&
+                {
+                    state. emailValid === "valid" &&
                     <div class="alert alert-success" role="alert">
-                        A simple success alert—check it out!
+                       You have subscribed successfully!
                     </div>
-                }          
+                }       
+                {
+                     state. emailValid === "invalid" &&
+                     <div class="alert alert-danger" role="alert">
+                        Please enter a valid email address.
+                    </div>
+                }   
         </div>
     </div>
         
