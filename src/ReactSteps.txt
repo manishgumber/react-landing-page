@@ -1,0 +1,30 @@
+//Instructions to create global state
+
+// INSIDE THE PROVIDER FILE
+
+
+// Step 1
+import React, {useState, createContext} from 'react';
+
+// Step 2
+const AppContext = createContext();
+
+// Step 3
+<AppContext>
+    <MyApp>....</MyApp>
+<AppContext />
+
+// Step 4
+<AppContext value={[globalState, setGlobalState]}>
+    <MyApp>....</MyApp>
+<AppContext />
+
+
+// INSIDE THE CONSUMER FILE
+
+// Step 5
+import React, { useContext } from 'React'
+
+// Step 6
+import AppContext from './AppContext'
+const [globalState, setGlobalState] = useContext(AppContext)
