@@ -13,7 +13,7 @@ const About = () => {
 
     if (!state.pageLoadComplete) {
       fetch(
-        "http://localhost:5000/imageInfo/",
+        `${process.env.REACT_APP_API_URL}/imageInfo/`,
         {
           method: 'GET'
         }
@@ -88,7 +88,7 @@ const About = () => {
         }
 
         fetch(
-          "http://localhost:5000/imageInfo/add",
+          `${process.env.REACT_APP_API_URL}/imageInfo/add`,
           {
             method: 'POST',
             body: JSON.stringify(formData),
@@ -122,7 +122,7 @@ const About = () => {
       body: formData
     };
 
-    fetch('http://localhost:5000/upload/image-upload', options).then(async res => {
+    fetch(`${process.env.REACT_APP_API_URL}/upload/image-upload`, options).then(async res => {
 
       let resJSON = await res.json()
 
