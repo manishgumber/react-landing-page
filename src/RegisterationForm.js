@@ -34,13 +34,14 @@ const RegistrationForm = (prop) => {
         }
 
         fetch(
-            'http://localhost:5000/auth/register',
+            `${process.env.REACT_APP_API_URL}/auth/register/`,
             {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: { "Content-Type": "application/json" }
             }
         ).then(async res => {
+
             let resJSON = await res.json()
 
 
@@ -51,7 +52,7 @@ const RegistrationForm = (prop) => {
 
                 setTimeout(submitMessage, 1);
                 setState({ ...state, register: 'OK', alertMsg: resJSON.message });
-                message.success(resJSON.message, 3);
+                message.success("You have been registered successfully", 3);
 
 
             }

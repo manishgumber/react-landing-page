@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import AppContext from "./AppContext.js";
 import LoginModal from "./LoginModal";
 import RegistratioForm from "./RegisterationForm";
-import { stat } from "fs";
+// import { Modal, Form, Icon, Input, Button, Alert } from 'antd';
+
 
 const LoginGroup = prop => {
 
-  const [globalState, setGlobalState] = useContext(AppContext);
+  const [globalState] = useContext(AppContext);
 
   if (globalState.loggedIn) {
     return (
@@ -26,66 +27,46 @@ const LoginGroup = prop => {
   }
 };
 
-function NavBar(prop) {
+
+const NavBar = (prop) => {
 
   const [globalState, setGlobalState] = useContext(AppContext);
-  const [stateLogin, setStateLogin] = useState({ loading: false, visible: false });
   const [stateRF, setStateRF] = useState({ visible: false });
 
-  const [stateLoc, setStateLoc] = useState({
+  const [state, setState] = useState({
     currentPage: prop.location,
-    home: prop.location === "/" ? "active" : "",
-    about: prop.location === "/about" ? "active" : "",
-    contact: prop.location === "/contact" ? "active" : ""
+    home: prop.location === '/' ? 'nav-item active' : 'nav-item',
+    about: prop.location === '/about' ? 'nav-item active' : 'nav-item',
+    contact: prop.location === '/contact' ? 'nav-item active' : 'nav-item'
   });
 
   useEffect(() => {
-    if (prop.location !== stateLogin.currentPage) {
-      setStateLoc({
+    if (prop.location !== state.currentPage) {
+      setState({
         currentPage: prop.location,
-        home: prop.location === "/" ? "active" : "",
-        about: prop.location === "/about" ? "active" : "",
-        contact: prop.location === "/contact" ? "active" : ""
+        home: prop.location === '/' ? 'nav-item active' : 'nav-item',
+        about: prop.location === '/about' ? 'nav-item active' : 'nav-item',
+        contact: prop.location === '/contact' ? 'nav-item active' : 'nav-item'
       })
     }
   });
 
-  // function cancel() {
-  //   setState({ loginModal: "hidden" });
-  // }
-
-  function signIn() {
-    setStateLogin({ visible: false });
-    setGlobalState({ ...globalState, loggedIn: true });
-  }
 
   const logOutUser = () => {
-    setStateLogin({ visible: false });
-    setGlobalState({ ...globalState, loggedIn: false });
+    // setStateLogin({ visible: false });
+    setGlobalState({ ...globalState, loggedIn: false, loginForm: false });
     // console.log('LogOut ~ Login Visible', stateLogin.visible);
     // console.log('LogOut ~ Global State Loggedin', globalState.loggedIn);
   };
 
   const logInUser = () => {
-    setStateLogin({ visible: true });
+    setGlobalState({ ...globalState, loginForm: true, loggedIn: false });
     // console.log('LogIn ~ Login Visible', stateLogin.visible);
     // console.log('LogIn ~ Global State Loggedin', globalState.loggedIn);
     // if (!globalState.loggedIn) {
     //   setStateLogin({ visible: true });
     // }
 
-  };
-
-  const handleOk = () => {
-    setStateLogin({ ...stateLogin, loading: true });
-    setTimeout(() => {
-      setGlobalState({ ...globalState, loggedIn: true });
-      setStateLogin({ loading: false, visible: false });
-    }, 1000);
-  };
-
-  const handleCancel = () => {
-    setStateLogin({ ...stateLogin, visible: false });
   };
 
   //REGISTER USER
@@ -109,17 +90,17 @@ function NavBar(prop) {
         </button>
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav mr-auto">
-            <li className={`nav-item ${stateLoc.home}`}>
+            <li className={state.home} >
               <Link className="nav-link" to="/">
                 Home
               </Link>
             </li>
-            <li className={`nav-item ${stateLoc.about}`}>
+            <li className={state.about}>
               <Link className="nav-link" to="/about">
-                About us
+                Documents
               </Link>
             </li>
-            <li className={`nav-item ${stateLoc.contact}`}>
+            <li className={state.contact}>
               <Link className="nav-link" to="/contact">
                 Contact
               </Link>
@@ -130,10 +111,13 @@ function NavBar(prop) {
           </span>
         </div>
       </nav>
-      {stateLogin.visible && !globalState.loggedIn && (
-        <LoginModal visible={stateLogin.visible} onOk={handleOk} onSubmit={handleOk} onCancel={handleCancel} loading={stateLogin.loading}></LoginModal>
+      {globalState.loginForm && !globalState.loggedIn && (
+        <LoginModal></LoginModal >
       )}
       <RegistratioForm visible={stateRF.visible} onClose={onRFClose}></RegistratioForm>
+
+
+
     </div>
   );
 }

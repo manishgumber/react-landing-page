@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "antd": "^3.23.4",
+    "cloudinary": "^1.15.0",
+    "cloudinary-react": "^1.2.1",
     "fetch": "^1.1.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -14,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:local": "cp .env.local .env && concurrently --kill-others \"less-watch-compiler --config less-watcher.config.json\"  \"react-scripts start\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +33,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "less": "^3.10.3",
+    "less-watch-compiler": "^1.14.1"
   }
 }
